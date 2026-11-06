@@ -1,0 +1,84 @@
+.faqs-page {
+    color: var(--primary);
+    font-family: "Urbanist", sans-serif;
+    font-size: 16pt;
+    margin-bottom: 100px;
+    width: 100vw;
+}
+
+.faqs-header {
+    padding: 20px 0;
+    margin-bottom: -20px;
+}
+
+.faqs-header h2 {
+    font-family: "Julius Sans One", serif;
+    color: var(--secondary);
+    font-size: 32pt;
+}
+
+.faqs-content {
+    width: 80vw;
+    margin: 10px 10vw;
+    letter-spacing: 2px;
+}
+
+.faqs-boxes {
+    text-align: left;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    height: 55px;
+    padding: 10px 20px;
+    background-image: linear-gradient(45deg, var(--secondary), var(--yellow-fade));    
+    color: var(--tertiary);
+    border-radius: 5px 5px;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+.faqs-question {
+    font-size: 16pt;
+    display: flex;
+    align-items: center;
+    padding-right: 10px;
+}
+
+.button-close {
+    position: relative;
+    background: none;
+    padding: 0;
+    font-size: 30pt;
+    cursor: pointer;
+}
+
+.button-open {
+    position: relative;
+    background: none;
+    padding: 0;
+    font-size: 30pt;
+    transform: rotate(45deg);
+    cursor: pointer;
+}
+
+.button-close:hover,
+.button-open:hover {
+    background: none;
+}
+
+.faqs-content p {
+    border: 2px solid var(--secondary);
+    padding: 20px 10px;
+    border-radius: 0 0 5px 5px;
+    border-top: none;
+    margin-top: -3px;
+}
+
+@media screen and (max-width: 1020px) {
+    .faqs-content {
+        width: 96vw;
+        margin: 0 2vw;
+        line-height: 1;
+    }
+}

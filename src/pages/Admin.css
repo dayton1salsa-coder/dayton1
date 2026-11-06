@@ -1,0 +1,1107 @@
+.admin-page {
+    font-family: "Urbanist", sans-serif;
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    color: var(--primary);
+}
+
+.admin-loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    font-family: "Urbanist", sans-serif;
+    font-size: 18pt;
+}
+
+.admin-login {
+    max-width: 400px;
+    margin: 100px auto;
+    padding: 40px;
+    font-family: "Urbanist", sans-serif;
+}
+
+.admin-login h2 {
+    font-family: "Julius Sans One", serif;
+    color: var(--secondary);
+    font-size: 24pt;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.admin-form-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
+}
+
+.admin-form-group label {
+    font-size: 12pt;
+    margin-bottom: 5px;
+    letter-spacing: 1px;
+}
+
+.admin-form-group input,
+.admin-form-group select {
+    padding: 10px;
+    font-size: 12pt;
+    border: 1px solid var(--secondary);
+    border-radius: 4px;
+    font-family: "Urbanist", sans-serif;
+    background-color: transparent;
+    color: var(--primary);
+    box-sizing: border-box;
+    width: 100%;
+}
+
+.admin-form-group select option {
+    background-color: #1a1a1a;
+    color: #ffffff;
+}
+
+.form-error {
+    color: red;
+    font-size: 10pt;
+    margin-top: 4px;
+}
+
+.admin-error {
+    color: red;
+    font-size: 10pt;
+    margin-bottom: 10px;
+}
+
+.admin-btn {
+    padding: 10px 20px;
+    background-color: var(--secondary);
+    color: var(--tertiary);
+    border: none;
+    border-radius: 6px;
+    font-family: "Urbanist", sans-serif;
+    font-size: 12pt;
+    cursor: pointer;
+    letter-spacing: 1px;
+}
+
+.admin-btn:hover {
+    opacity: 0.9;
+}
+
+.admin-btn-outline {
+    padding: 10px 20px;
+    background: transparent;
+    border: 2px solid var(--secondary);
+    border-radius: 6px;
+    font-family: "Urbanist", sans-serif;
+    font-size: 12pt;
+    cursor: pointer;
+    letter-spacing: 1px;
+    color: var(--primary);
+}
+
+.admin-btn-outline:hover {
+    background-color: var(--secondary);
+    color: var(--tertiary);
+}
+
+.admin-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.admin-header h2 {
+    font-family: "Julius Sans One", serif;
+    color: var(--secondary);
+    font-size: 24pt;
+    margin: 0;
+}
+
+.admin-current-user {
+    font-size: 11pt;
+    color: var(--secondary);
+    letter-spacing: 1px;
+}
+
+.admin-stats {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+}
+
+.admin-stat {
+    flex: 1;
+    min-width: 120px;
+    padding: 20px;
+    border: 1px solid var(--secondary);
+    border-radius: 8px;
+    text-align: center;
+}
+
+.admin-stat p {
+    font-size: 10pt;
+    letter-spacing: 1px;
+    margin: 0 0 5px 0;
+    opacity: 0.7;
+}
+
+.admin-stat h3 {
+    font-size: 24pt;
+    color: var(--secondary);
+    margin: 0;
+}
+
+.admin-search {
+    margin-bottom: 15px;
+}
+
+.admin-search-input {
+    width: 100%;
+    padding: 12px;
+    font-size: 14pt;
+    border: 1px solid var(--secondary);
+    border-radius: 6px;
+    font-family: "Urbanist", sans-serif;
+    background-color: transparent;
+    color: var(--primary);
+    box-sizing: border-box;
+}
+
+.admin-staff {
+    margin-bottom: 20px;
+    padding: 15px;
+    border: 1px solid var(--secondary);
+    border-radius: 8px;
+}
+
+.admin-staff h3 {
+    font-family: "Julius Sans One", serif;
+    color: var(--secondary);
+    font-size: 14pt;
+    margin: 0 0 10px 0;
+}
+
+.staff-lookup {
+    margin-bottom: 12px;
+}
+
+.staff-lookup input[type="date"] {
+    padding: 8px 12px;
+    font-size: 12pt;
+    border: 1px solid var(--secondary);
+    border-radius: 4px;
+    font-family: "Urbanist", sans-serif;
+    background-color: transparent;
+    color: var(--primary);
+}
+
+.staff-empty {
+    font-size: 11pt;
+    opacity: 0.5;
+    font-style: italic;
+    margin: 0;
+}
+
+.staff-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.staff-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 14px;
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 6px;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.staff-name {
+    font-size: 12pt;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+    color: var(--secondary);
+}
+
+.staff-meta {
+    font-size: 10pt;
+    opacity: 0.7;
+    letter-spacing: 0.5px;
+}
+
+.staff-count {
+    font-size: 11pt;
+    letter-spacing: 0.5px;
+}
+
+.admin-attendance {
+    margin-bottom: 20px;
+    padding: 15px;
+    border: 1px solid var(--secondary);
+    border-radius: 8px;
+}
+
+.admin-attendance h3 {
+    font-family: "Julius Sans One", serif;
+    color: var(--secondary);
+    font-size: 14pt;
+    margin: 0 0 10px 0;
+}
+
+.attendance-lookup {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.attendance-lookup input[type="date"] {
+    padding: 8px 12px;
+    font-size: 12pt;
+    border: 1px solid var(--secondary);
+    border-radius: 4px;
+    font-family: "Urbanist", sans-serif;
+    background-color: transparent;
+    color: var(--primary);
+}
+
+.attendance-lookup p {
+    margin: 0;
+    font-size: 11pt;
+    letter-spacing: 1px;
+}
+
+.admin-checkin-date {
+    margin-bottom: 20px;
+    padding: 15px;
+    border: 1px solid var(--secondary);
+    border-radius: 8px;
+}
+
+.admin-checkin-date h3 {
+    font-family: "Julius Sans One", serif;
+    color: var(--secondary);
+    font-size: 14pt;
+    margin: 0 0 10px 0;
+}
+
+.checkin-date-row {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.checkin-date-row input[type="date"] {
+    padding: 8px 12px;
+    font-size: 12pt;
+    border: 1px solid var(--secondary);
+    border-radius: 4px;
+    font-family: "Urbanist", sans-serif;
+    background-color: transparent;
+    color: var(--primary);
+}
+
+.checkin-date-warning {
+    font-size: 11pt;
+    color: #cc8800;
+    letter-spacing: 1px;
+}
+
+.admin-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.admin-filters {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.admin-actions {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.admin-sort {
+    display: flex;
+    gap: 8px;
+}
+
+.admin-filter-btn {
+    padding: 8px 16px;
+    background: transparent;
+    border: 1px solid var(--secondary);
+    border-radius: 20px;
+    font-family: "Urbanist", sans-serif;
+    font-size: 11pt;
+    cursor: pointer;
+    color: var(--primary);
+    letter-spacing: 1px;
+    transition: all 0.2s;
+}
+
+.admin-filter-btn:hover,
+.admin-filter-btn.active {
+    background-color: var(--secondary);
+    color: var(--tertiary);
+}
+
+.admin-manual-entry {
+    margin-bottom: 20px;
+    padding: 20px;
+    border: 1px solid var(--secondary);
+    border-radius: 8px;
+}
+
+.admin-manual-entry h3 {
+    font-family: "Julius Sans One", serif;
+    color: var(--secondary);
+    font-size: 14pt;
+    margin: 0 0 15px 0;
+}
+
+.manual-entry-form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    align-items: start;
+}
+
+.manual-entry-form .admin-btn {
+    grid-column: 1 / -1;
+    width: 100%;
+}
+
+.admin-table-wrapper {
+    overflow-x: auto;
+}
+
+.admin-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12pt;
+}
+
+.admin-table th {
+    text-align: left;
+    padding: 12px 16px;
+    border-bottom: 2px solid var(--secondary);
+    font-family: "Julius Sans One", serif;
+    color: var(--secondary);
+    letter-spacing: 1px;
+    font-size: 11pt;
+    white-space: nowrap;
+}
+
+.admin-table td {
+    padding: 12px 16px;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    letter-spacing: 1px;
+}
+
+.expired-row td {
+    opacity: 0.5;
+}
+
+.status-badge {
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 10pt;
+    letter-spacing: 1px;
+    white-space: nowrap;
+}
+
+.status-active {
+    background-color: rgba(0, 255, 0, 0.15);
+    color: #00cc00;
+}
+
+.status-expired {
+    background-color: rgba(255, 0, 0, 0.15);
+    color: #cc0000;
+}
+
+.status-used {
+    background-color: rgba(255, 165, 0, 0.15);
+    color: #cc8800;
+}
+
+.checkin-btn {
+    padding: 6px 14px;
+    background-color: var(--secondary);
+    color: var(--tertiary);
+    border: none;
+    border-radius: 4px;
+    font-family: "Urbanist", sans-serif;
+    font-size: 10pt;
+    cursor: pointer;
+    letter-spacing: 1px;
+    white-space: nowrap;
+}
+
+.checkin-btn-undo {
+    background: transparent;
+    border: 1px solid var(--secondary);
+    color: var(--primary);
+}
+
+.delete-btn {
+    padding: 6px 14px;
+    background: transparent;
+    border: 1px solid #cc0000;
+    border-radius: 4px;
+    font-family: "Urbanist", sans-serif;
+    font-size: 10pt;
+    cursor: pointer;
+    letter-spacing: 1px;
+    color: #cc0000;
+    transition: all 0.2s;
+    white-space: nowrap;
+}
+
+.delete-btn:hover {
+    background-color: #cc0000;
+    color: white;
+}
+
+.admin-empty {
+    text-align: center;
+    padding: 40px;
+    opacity: 0.5;
+    font-style: italic;
+}
+
+.admin-mobile-list {
+    display: none;
+}
+
+@media screen and (max-width: 768px) {
+    .admin-page {
+        padding: 10px;
+    }
+
+    .admin-header h2 {
+        font-size: 18pt;
+    }
+
+    .admin-current-user {
+        display: none;
+    }
+
+    .admin-btn,
+    .admin-btn-outline {
+        padding: 10px 14px;
+        font-size: 11pt;
+    }
+
+    .admin-stats {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+        margin-bottom: 15px;
+    }
+
+    .admin-stat {
+        min-width: unset;
+        padding: 12px;
+    }
+
+    .admin-stat h3 {
+        font-size: 20pt;
+    }
+
+    .admin-search {
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        background-color: var(--background, #000);
+        padding: 10px 0;
+        margin-bottom: 10px;
+    }
+
+    .admin-search-input {
+        font-size: 16px;
+        padding: 14px;
+    }
+
+    .staff-lookup input[type="date"] {
+        width: 100%;
+        box-sizing: border-box;
+        font-size: 16px;
+    }
+
+    .staff-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 4px;
+    }
+
+    .admin-attendance {
+        padding: 12px;
+        margin-bottom: 12px;
+    }
+
+    .attendance-lookup {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
+
+    .attendance-lookup input[type="date"] {
+        width: 100%;
+        box-sizing: border-box;
+        font-size: 16px;
+    }
+
+    .checkin-date-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
+
+    .checkin-date-row input[type="date"] {
+        width: 100%;
+        box-sizing: border-box;
+        font-size: 16px;
+    }
+
+    .admin-controls {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 8px;
+    }
+
+    .admin-filters {
+        justify-content: center;
+    }
+
+    .admin-filter-btn {
+        padding: 6px 12px;
+        font-size: 10pt;
+    }
+
+    .admin-actions {
+        justify-content: center;
+    }
+
+    .admin-sort {
+        justify-content: center;
+        width: 100%;
+    }
+
+    .manual-entry-form {
+        grid-template-columns: 1fr;
+    }
+
+    .admin-form-group input,
+    .admin-form-group select {
+        font-size: 16px;
+        padding: 12px;
+    }
+
+    .admin-manual-entry {
+        padding: 15px;
+    }
+
+    .admin-table-wrapper {
+        display: none;
+    }
+
+    .admin-mobile-list {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .admin-mobile-card {
+        border: 1px solid var(--secondary);
+        border-radius: 8px;
+        padding: 12px;
+        display: grid;
+        grid-template-columns: 1fr auto;
+        gap: 8px;
+        align-items: center;
+    }
+
+    .admin-mobile-card.expired-card {
+        opacity: 0.5;
+    }
+
+    .admin-mobile-top {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        flex-wrap: wrap;
+        margin-bottom: 6px;
+    }
+
+    .admin-mobile-name {
+        font-size: 13pt;
+        font-family: "Julius Sans One", serif;
+        color: var(--secondary);
+    }
+
+    .admin-mobile-meta {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 2px 12px;
+        font-size: 10pt;
+        opacity: 0.8;
+    }
+
+    .admin-mobile-meta span {
+        letter-spacing: 0.5px;
+    }
+
+    .admin-mobile-buttons {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        align-items: stretch;
+    }
+
+    .admin-mobile-buttons .checkin-btn {
+        padding: 12px 16px;
+        font-size: 11pt;
+    }
+
+    .admin-mobile-buttons .delete-btn {
+        padding: 8px 16px;
+        font-size: 10pt;
+    }
+}
+
+@media screen and (max-width: 400px) {
+    .admin-login {
+        margin: 60px auto;
+        padding: 20px;
+    }
+
+    .admin-header h2 {
+        font-size: 14pt;
+    }
+
+    .admin-mobile-meta {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ===== Check-in screen (ci-) ===== */
+
+.ci-tabs {
+    display: flex;
+    gap: 6px;
+    padding: 4px;
+    border-radius: 999px;
+    background: rgba(128, 128, 128, 0.18);
+    margin-bottom: 20px;
+}
+
+.ci-tab {
+    flex: 1;
+    padding: 12px 10px;
+    border: none;
+    border-radius: 999px;
+    background: transparent;
+    color: var(--primary);
+    font-family: "Urbanist", sans-serif;
+    font-size: 12pt;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: background-color 0.15s, color 0.15s;
+}
+
+.ci-tab.active {
+    background-color: var(--secondary);
+    color: var(--tertiary);
+    font-weight: bold;
+}
+
+.ci-screen {
+    max-width: 760px;
+    margin: 0 auto;
+}
+
+/* Date bar */
+.ci-datebar {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    padding: 10px 14px;
+    margin-bottom: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 8px;
+    font-size: 11pt;
+    letter-spacing: 0.5px;
+}
+
+.ci-datebar-warn {
+    border-color: #cc8800;
+    background: rgba(204, 136, 0, 0.12);
+    color: #cc8800;
+}
+
+.ci-datebar-text {
+    flex: 1;
+    min-width: 140px;
+}
+
+.ci-count-chip {
+    padding: 4px 12px;
+    border-radius: 999px;
+    background: rgba(0, 255, 0, 0.15);
+    color: #00cc00;
+    font-size: 10pt;
+    white-space: nowrap;
+}
+
+.ci-datebar-actions {
+    display: flex;
+    gap: 14px;
+}
+
+.ci-link {
+    background: none;
+    border: none;
+    padding: 0;
+    color: var(--secondary);
+    font-family: "Urbanist", sans-serif;
+    font-size: 11pt;
+    letter-spacing: 0.5px;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.ci-link-center {
+    display: block;
+    margin: 14px auto 0;
+}
+
+.ci-datepicker {
+    margin-bottom: 12px;
+}
+
+.ci-datepicker input {
+    padding: 10px 12px;
+    font-size: 12pt;
+    border: 1px solid var(--secondary);
+    border-radius: 6px;
+    font-family: "Urbanist", sans-serif;
+    background-color: transparent;
+    color: var(--primary);
+}
+
+/* Big search box */
+.ci-search {
+    position: relative;
+    margin-bottom: 16px;
+}
+
+.ci-search-input {
+    padding: 16px 48px 16px 16px;
+    font-size: 16pt;
+    min-height: 60px;
+}
+
+.ci-clear {
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 44px;
+    height: 44px;
+    border: none;
+    border-radius: 50%;
+    background: transparent;
+    color: var(--primary);
+    font-size: 16pt;
+    cursor: pointer;
+    opacity: 0.7;
+}
+
+/* Result cards */
+.ci-results,
+.ci-recent-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.ci-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    padding: 14px 16px;
+    border: 1px solid var(--secondary);
+    border-radius: 10px;
+}
+
+.ci-card-done {
+    border-color: #00cc00;
+    background: rgba(0, 255, 0, 0.07);
+}
+
+.ci-card-blocked {
+    border-color: rgba(255, 0, 0, 0.5);
+    background: rgba(255, 0, 0, 0.06);
+}
+
+.ci-card-info {
+    min-width: 0;
+}
+
+.ci-card-name {
+    font-family: "Julius Sans One", serif;
+    color: var(--secondary);
+    font-size: 16pt;
+    margin-bottom: 4px;
+    overflow-wrap: anywhere;
+}
+
+.ci-card-sub {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 6px 12px;
+    font-size: 11pt;
+    opacity: 0.85;
+    letter-spacing: 0.5px;
+    margin-top: 4px;
+}
+
+.ci-warn {
+    color: #cc8800;
+    font-weight: bold;
+    opacity: 1;
+}
+
+.ci-card-action {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 6px;
+    flex-shrink: 0;
+}
+
+.ci-btn {
+    min-height: 52px;
+    min-width: 130px;
+    padding: 12px 20px;
+    background-color: var(--secondary);
+    color: var(--tertiary);
+    border: none;
+    border-radius: 8px;
+    font-family: "Urbanist", sans-serif;
+    font-size: 13pt;
+    font-weight: bold;
+    letter-spacing: 1px;
+    cursor: pointer;
+}
+
+.ci-btn:disabled {
+    opacity: 0.5;
+    cursor: wait;
+}
+
+.ci-btn-renew {
+    background: transparent;
+    color: var(--primary);
+    border: 2px solid var(--secondary);
+    font-size: 11pt;
+}
+
+.ci-done {
+    color: #00cc00;
+    font-size: 12pt;
+    font-weight: bold;
+    text-align: center;
+    letter-spacing: 1px;
+}
+
+.ci-noresults {
+    text-align: center;
+    padding: 24px 10px;
+}
+
+.ci-noresults p {
+    margin: 0 0 14px 0;
+    font-size: 13pt;
+    opacity: 0.8;
+}
+
+/* Checked-in list */
+.ci-section-title {
+    font-family: "Julius Sans One", serif;
+    color: var(--secondary);
+    font-size: 14pt;
+    margin: 6px 0 12px 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.ci-count {
+    padding: 2px 12px;
+    border-radius: 999px;
+    background: rgba(0, 255, 0, 0.15);
+    color: #00cc00;
+    font-size: 11pt;
+    font-family: "Urbanist", sans-serif;
+}
+
+.ci-recent-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+}
+
+.ci-recent-name {
+    display: block;
+    font-size: 12pt;
+    letter-spacing: 0.5px;
+}
+
+.ci-recent-meta {
+    display: block;
+    font-size: 10pt;
+    opacity: 0.65;
+    letter-spacing: 0.5px;
+}
+
+/* Who taught */
+.ci-details {
+    margin-top: 22px;
+    padding: 12px 14px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 8px;
+}
+
+.ci-details summary {
+    cursor: pointer;
+    font-size: 11pt;
+    letter-spacing: 0.5px;
+}
+
+.ci-details summary strong {
+    color: var(--secondary);
+}
+
+.ci-details .instructor-toggle-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 12px;
+}
+
+.ci-details .instructor-toggle-btn {
+    padding: 10px 16px;
+    background: transparent;
+    border: 1px solid var(--secondary);
+    border-radius: 20px;
+    color: var(--primary);
+    font-family: "Urbanist", sans-serif;
+    font-size: 11pt;
+    cursor: pointer;
+}
+
+.ci-details .instructor-toggle-btn.taught {
+    background-color: var(--secondary);
+    color: var(--tertiary);
+}
+
+/* Confirmation banner */
+.ci-toast {
+    position: fixed;
+    left: 50%;
+    bottom: 24px;
+    transform: translateX(-50%);
+    z-index: 50;
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    max-width: calc(100vw - 32px);
+    padding: 14px 18px;
+    border-radius: 10px;
+    background: #0b6b2e;
+    color: #fff;
+    font-size: 12pt;
+    letter-spacing: 0.5px;
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.45);
+}
+
+.ci-toast button {
+    padding: 8px 16px;
+    border: 1px solid rgba(255, 255, 255, 0.7);
+    border-radius: 6px;
+    background: transparent;
+    color: #fff;
+    font-family: "Urbanist", sans-serif;
+    font-size: 11pt;
+    cursor: pointer;
+}
+
+@media screen and (max-width: 768px) {
+    .ci-tab {
+        padding: 12px 6px;
+        font-size: 11pt;
+        letter-spacing: 0.5px;
+    }
+
+    .ci-search-input {
+        font-size: 16px;
+        min-height: 56px;
+    }
+
+    .ci-card {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .ci-card-action {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .ci-card-action .ci-btn {
+        flex: 1;
+        min-height: 56px;
+    }
+
+    .ci-card-name {
+        font-size: 15pt;
+    }
+
+    .ci-toast {
+        bottom: 14px;
+        width: calc(100vw - 32px);
+        justify-content: space-between;
+    }
+}
+
+
+/* Kiosk registrations waiting for payment */
+.status-pending {
+    background-color: rgba(255, 165, 0, 0.15);
+    color: #cc8800;
+}

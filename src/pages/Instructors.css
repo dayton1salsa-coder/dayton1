@@ -1,0 +1,179 @@
+.instructors-page {
+    color: var(--primary);
+    font-family: "Urbanist", sans-serif;
+    width: 100vw;
+}
+
+.instructors-header {
+    padding: 20px 0;
+}
+
+.instructors-header h2 {
+    font-family: "Julius Sans One", serif;
+    color: var(--secondary);
+    font-size: 32pt;
+}
+
+.instructors-header img {
+    padding: 20px 0;
+    width: 500px;
+}
+
+.instructor1 {
+    background-image: linear-gradient(45deg, var(--secondary), var(--yellow-fade));
+    color: var(--tertiary);
+    display: flex;
+    flex-direction: row;
+    width: 100vw;
+    align-items: center;
+}
+
+.instructor1-text {
+    min-width: 50vw;
+    padding: 20px 3vw;
+    color: var(--tertiary);
+}
+
+.instructor1 h3,
+.instructor2 h3 {
+    font-family: "Julius Sans One", serif;
+    font-size: 28pt;
+    line-height: 8pt;
+}
+
+.instructor1 h4,
+.instructor2 h4 {
+    font-family: "Julius Sans One", serif;
+    font-size: 20pt;
+    line-height: 8pt;
+}
+
+.instructor1 p,
+.instructor2 p {
+    font-size: 16pt;
+    letter-spacing: 2px;
+}
+
+.instructor1-picture,
+.instructor2-picture {
+    min-width: 38vw;
+    max-width: 30vw;
+    padding: 20px 2vw;
+    align-self: center;
+}
+
+.instructor1-picture img,
+.instructor2-picture img {
+    width: 100%;
+}
+
+.instructor2 {
+    background-color: var(--tertiary);
+    color: var(--secondary);
+    display: flex;
+    flex-direction: row;
+    width: 100vw;
+}
+
+.instructor2-text {
+    width: 50vw;
+    padding: 20px 3vw;
+    color: var(--secondary);
+}
+
+.instructor2 p {
+    color: var(--primary);
+}
+
+@media screen and (min-width: 1100px) {
+
+    .instructor2 {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .instructor1-text {
+        width: 55vw;
+        padding: 20px 3vw;
+    }
+
+    .instructor2-text {
+        width: 55vw;
+        padding: 20px 3vw;
+    }
+
+    .instructor1-picture,
+    .instructor2-picture {
+        min-width: 450px;
+        max-width: 450px;
+        padding: 20px 2vw;
+        align-self: center;
+    }
+
+    .instructor1-picture img,
+    .instructor2-picture img {
+        width: 400px;
+    }
+}
+
+@media screen and (max-width: 900px) {
+
+    .instructor1,
+    .instructor2 {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .instructor1 {
+        flex-direction: column-reverse;
+    }
+
+    .instructor1-text,
+    .instructor2-text {
+        width: 80vw;
+        padding: 20px 3vw;
+        align-self: center;
+
+    }
+
+    .instructor1-picture,
+    .instructor2-picture {
+        max-width: 300px;
+    }
+}
+
+@media screen and (max-width: 500px) {
+
+    .instructors-header img {
+        width: 100vw;
+        padding: 0;
+    }
+
+    .instructor1 h3,
+    .instructor2 h3 {
+        font-size: 23pt;
+    }
+
+    .instructor1 h4,
+    .instructor2 h4 {
+        font-size: 15pt;
+    }
+
+}
+
+@media screen and (max-width: 400px) {
+
+    .instructor1 h3,
+    .instructor2 h3 {
+        font-size: 21pt;
+    }
+
+    .instructor1 h4,
+    .instructor2 h4 {
+        font-size: 14pt;
+    }
+
+}
