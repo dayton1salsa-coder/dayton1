@@ -1402,3 +1402,9 @@
         justify-content: center;
     }
 }
+/* The notice from Choreo can be a full sentence: let it wrap cleanly */
+.days p.classes-announcement {
+    line-height: 1.35;
+    margin: 10px auto 0;
+    max-width: 32ch;
+}

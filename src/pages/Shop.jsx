@@ -1,12 +1,13 @@
 import './Classes.css'
 import './Shop.css'
 import { useRef, useState } from 'react'
-import { useProducts } from '../hooks/useProducts'
+import { useChoreoProducts } from '../hooks/useChoreo'
 import MerchCheckout from './MerchCheckout'
 
 export default function Shop() {
-    const { products, loading } = useProducts()
+    const { products, loading } = useChoreoProducts()
     const [preselectedId, setPreselectedId] = useState(null)
+    const [photoFor, setPhotoFor] = useState({}) // product id -> which photo is big
     const checkoutRef = useRef(null)
     const activeProducts = products.filter(p => p.active)
 
@@ -37,11 +38,22 @@ export default function Shop() {
                             <div key={product.id} className='shop-card'>
                                 <div className='shop-card-img'>
                                     {product.imageUrl ? (
-                                        <img src={product.imageUrl} alt={product.name} />
+                                        <img src={product.photos[photoFor[product.id] || 0] || product.imageUrl} alt={product.name} />
                                     ) : (
                                         <div className='shop-card-placeholder'>No photo yet</div>
                                     )}
                                 </div>
+                                {product.photos.length > 1 && (
+                                    <div className='shop-card-thumbs'>
+                                        {product.photos.map((u, i) => (
+                                            <button key={u} type='button' aria-label={`Photo ${i + 1}`}
+                                                className={(photoFor[product.id] || 0) === i ? 'selected' : ''}
+                                                onClick={() => setPhotoFor({ ...photoFor, [product.id]: i })}>
+                                                <img src={u} alt='' />
+                                            </button>
+                                        ))}
+                                    </div>
+                                )}
                                 <div className='shop-card-info'>
                                     <h3>{product.name}</h3>
                                     <p className='shop-card-price'>${product.price}</p>

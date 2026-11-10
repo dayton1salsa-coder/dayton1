@@ -1,6 +1,5 @@
 import { useState, useRef } from 'react'
-
-const CLIENT_ID = 'AVI4LpJe46rQQcObnfSR6qyf9dzp3ypfM9HI4pqp61LZLE5cynC16Z5ASlu73y5ggpX7tQTbE-exYM1l'
+import { PAYPAL_CLIENT_ID as CLIENT_ID } from '../choreo'
 
 export default function MerchCheckout({ products }) {
     const [cart, setCart] = useState([]) // [{ productId, productName, size, quantity, unitPrice }]
@@ -49,6 +48,7 @@ export default function MerchCheckout({ products }) {
                 productId: selectedProduct.id,
                 productName: selectedProduct.name,
                 size: selectedSize,
+                sizeId: variant?.id || null,
                 quantity: selectedQty,
                 unitPrice: selectedProduct.price
             }]
@@ -100,44 +100,38 @@ export default function MerchCheckout({ products }) {
         containerRef.current.innerHTML = ''
 
         window.paypal.Buttons({
-            createOrder: (data, actions) => {
-                const total = cartRef.current.reduce((sum, item) => sum + (parseFloat(item.unitPrice) * item.quantity), 0)
-                return actions.order.create({
-                    purchase_units: [{
-                        description: 'DaytOn1 Salsa Merch Order',
-                        amount: {
-                            value: total.toFixed(2),
-                            currency_code: 'USD',
-                            breakdown: {
-                                item_total: { currency_code: 'USD', value: total.toFixed(2) }
-                            }
-                        },
-                        items: cartRef.current.map(item => ({
-                            name: `${item.productName} (${item.size})`.slice(0, 127),
-                            unit_amount: { currency_code: 'USD', value: item.unitPrice },
-                            quantity: String(item.quantity),
-                            category: 'PHYSICAL_GOODS'
-                        }))
-                    }]
+            // The server works out the price from the real product prices (not the browser).
+            createOrder: async () => {
+                const res = await fetch('/.netlify/functions/create-paypal-order', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        buyer: buyerRef.current,
+                        people: [],
+                        merch: cartRef.current.map(i => ({ productId: i.productId, sizeId: i.sizeId || null, quantity: i.quantity }))
+                    })
                 })
+                const data = await res.json()
+                if (!res.ok || !data.id) {
+                    setPayError(data.error || 'Could not start the payment. Please try again.')
+                    throw new Error(data.error || 'create-order failed')
+                }
+                return data.id
             },
             onApprove: async (data) => {
                 setPaying(true)
                 setPayError('')
                 try {
-                    const res = await fetch('/.netlify/functions/capture-merch-order', {
+                    const res = await fetch('/.netlify/functions/capture-paypal-order', {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({
-                            orderID: data.orderID,
-                            items: cartRef.current,
-                            buyer: buyerRef.current
-                        })
+                        body: JSON.stringify({ orderID: data.orderID })
                     })
                     const result = await res.json()
                     if (!res.ok || !result.success) {
                         throw new Error(result.error || 'Payment could not be verified.')
                     }
+                    if (result.warning) alert(result.warning)
                     setOrderComplete(true)
                 } catch (err) {
                     console.error('Merch order capture failed:', err)
@@ -213,7 +207,7 @@ export default function MerchCheckout({ products }) {
                                             onClick={() => { setSelectedSize(v.size); setAddError('') }}
                                         >
                                             <p>{v.size}</p>
-                                            <p>{v.stock} left</p>
+                                            {v.left && <p>{v.left} left</p>}
                                         </div>
                                     ))}
                                 </div>
