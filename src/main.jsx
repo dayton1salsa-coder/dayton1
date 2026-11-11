@@ -1,16 +1,13 @@
 import { createRoot } from 'react-dom/client'
 import './index.css'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import Invoice from './pages/Invoice';
 import App from './App.jsx';
 import About from './pages/About';
 import Classes from './pages/Classes';
 import Events from './pages/Events';
 import Instructors from './pages/Instructors';
 import FAQs from './pages/FAQs';
-import Admin from './pages/Admin';
-import Kiosk from './pages/Kiosk';
-import Owner from './pages/Owner';
+import GoToChoreo from './pages/GoToChoreo';
 import Shop from './pages/Shop'
 const router = createBrowserRouter([
   {
@@ -39,11 +36,11 @@ const router = createBrowserRouter([
       },
       {
         path: '/admin',
-        element: <Admin />,
+        element: <GoToChoreo to='owner' />,
       },
       {
         path: '/invoice/:invoiceId',
-        element: <Invoice />,
+        element: <GoToChoreo to='invoice' />,
       },
       
       { path: 'Shop',
@@ -52,11 +49,11 @@ const router = createBrowserRouter([
   },
   {
     path: '/kiosk',
-    element: <Kiosk />,
+    element: <GoToChoreo to='kiosk' />,
   },
   {
     path: '/owner',
-    element: <Owner />,
+    element: <GoToChoreo to='owner' />,
   },
 ]);
 

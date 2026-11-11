@@ -5,17 +5,19 @@ import level1 from '../assets/noel-1.png'
 import level2 from '../assets/group-2.png'
 import level3 from '../assets/rj-teaching.png'
 import PayPalButton from './PayPalButton'
-import { usePassTypes, isPassVisible, getExpiryDate } from '../hooks/usePassTypes'
-import { useSchedule } from '../hooks/useSchedule'
-import { useProducts } from '../hooks/useProducts'
+import { useChoreo, useChoreoPasses, useChoreoProducts } from '../hooks/useChoreo'
+import { buildSchedule } from '../schedule'
 
 const emptyPerson = { firstName: '', lastName: '', phone: '', email: '' }
 const emptyPickup = { name: '', phone: '', email: '' }
 
 export default function Classes() {
-    const { passTypes } = usePassTypes()
-    const { schedule, loading: scheduleLoading } = useSchedule()
-    const { products } = useProducts()
+    // Passes now come from Choreo (only the ones on sale right now)
+    const { passes: passTypes, loading: passesLoading } = useChoreoPasses()
+    // Schedule, notice and merch: also from Choreo (Heather edits them there)
+    const { data: choreo } = useChoreo()
+    const schedule = buildSchedule(choreo)
+    const { products } = useChoreoProducts()
     const [step, setStep] = useState(1)
     const [tab, setTab] = useState('passes')
     const [selectedPass, setSelectedPass] = useState(null)
@@ -36,19 +38,21 @@ export default function Classes() {
     const [pickup, setPickup] = useState(emptyPickup)
     const [pickupErrors, setPickupErrors] = useState({})
 
-    const visiblePasses = passTypes.filter(p => isPassVisible(p))
+    const visiblePasses = passTypes
     const activeProducts = products.filter(p => p.active)
 
     const currentProductId = selectedProductId || activeProducts[0]?.id || ''
     const selectedProduct = activeProducts.find(p => p.id === currentProductId)
 
-    // Fallback values while schedule loads or if doc doesn't exist yet
-    const month = schedule?.month || 'August'
-    const dayName = schedule?.dayName || 'Mondays'
-    const datesList = schedule?.datesList || 'Aug 3, 10, 17, 24'
+    // While Choreo loads these stay empty (nothing made-up is shown)
+    const month = schedule?.month || ''
+    const dayName = schedule?.dayName || ''
+    const datesList = schedule?.datesList || ''
     const cancellationNote = schedule?.cancellationNote || ''
     const announcement = schedule?.announcement || ''
     const specialEvents = schedule?.specialEvents || []
+    const blocks = schedule?.blocks || []
+    const place = schedule?.place
 
     function passFor(key) {
         return passTypes.find(p => p.key === key)
@@ -66,8 +70,7 @@ export default function Classes() {
         : { name: pickup.name.trim(), phone: pickup.phone, email: pickup.email.trim() }
 
     function formatExpiry(pass) {
-        if (!pass) return ''
-        return new Date(getExpiryDate(pass)).toLocaleDateString()
+        return pass?.goodThrough || ''
     }
 
     function flashAdded(text) {
@@ -87,6 +90,9 @@ export default function Classes() {
         if (!formData.phone.trim()) newErrors.phone = 'Phone number is required'
         else if (formData.phone.length < 10) newErrors.phone = 'Enter a valid 10 digit phone number'
         if (!selectedPass) newErrors.selectedPass = 'Please choose a pass'
+        // The first person pays: their email is needed for the receipt and to find their passes later
+        if (cart.length === 0 && !formData.email.trim()) newErrors.email = 'Email is required for the person paying'
+        else if (formData.email.trim() && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(formData.email.trim())) newErrors.email = 'Enter a valid email'
         return newErrors
     }
 
@@ -156,6 +162,7 @@ export default function Classes() {
                 productId: selectedProduct.id,
                 productName: selectedProduct.name,
                 size: selectedSize,
+                sizeId: variant?.id || null,
                 quantity: selectedQty,
                 unitPrice: selectedProduct.price
             }]
@@ -277,10 +284,21 @@ export default function Classes() {
         <div className="classes-page">
             <div className='classes-content'>
                 <div className='classes-location'>
-                    <h3>NEW Location</h3>
-                    <p>On Par Entertainment</p>
-                    <p>4464 Indian Ripple Rd</p>
-                    <p>Beavercreek, OH 45440</p>
+                    <h3>Location</h3>
+                    {place ? (
+                        <>
+                            <p>{place.name}</p>
+                            {place.address && (place.address.includes(',')
+                                ? <><p>{place.address.slice(0, place.address.indexOf(','))}</p><p>{place.address.slice(place.address.indexOf(',') + 1).trim()}</p></>
+                                : <p>{place.address}</p>)}
+                        </>
+                    ) : (
+                        <>
+                            <p>On Par Entertainment</p>
+                            <p>4464 Indian Ripple Rd</p>
+                            <p>Beavercreek, OH 45440</p>
+                        </>
+                    )}
                 </div>
                 <div className='classes-schedules'>
                     <div className='classes-schedule-section'>
@@ -292,18 +310,19 @@ export default function Classes() {
                         </div>
                         <div className='class-schedule'>
                             <h3>Class Schedule</h3>
-                            <div className='schedule'>
-                                <div className='times'>
-                                    <p>6:30</p>
-                                    <p>7:25</p>
-                                    <p>7:45</p>
+                            {blocks.map(b => (
+                                <div key={b.weekday}>
+                                {blocks.length > 1 && <h4>{b.day}</h4>}
+                                <div className='schedule'>
+                                    <div className='times'>
+                                        {b.rows.map((r, i) => <p key={i}>{r.time}</p>)}
+                                    </div>
+                                    <div className='classes'>
+                                        {b.rows.map((r, i) => <p key={i}>{r.title}</p>)}
+                                    </div>
                                 </div>
-                                <div className='classes'>
-                                    <p>Bachata (all levels)</p>
-                                    <p>Social Dancing</p>
-                                    <p>Salsa (all levels)</p>
                                 </div>
-                            </div>
+                            ))}
                             {specialEvents.map(event => (
                                 <div key={event.id} className='class-schedule special-event'>
                                     <h3>🔔 {event.title}</h3>
@@ -322,7 +341,7 @@ export default function Classes() {
                     <h4>{month}</h4>
                     <p>We offer classes in monthly cycles</p>
                     <div className='rates'>
-                        {passTypes.filter(p => p.active).map(pass => (
+                        {passTypes.map(pass => (
                             <div className='rate-row' key={pass.id}>
                                 <span className='rate-label'>{pass.label}:</span>
                                 <span className='rate-price'>${pass.amount}</span>
@@ -359,7 +378,9 @@ export default function Classes() {
                                 {tab === 'passes' && (
                                     <div className='co-panel'>
                                         <div className='co-step'>1 · Choose a pass</div>
-                                        {visiblePasses.length === 0 ? (
+                                        {passesLoading ? (
+                                            <span className='monthly-unavailable'>Loading passes…</span>
+                                        ) : visiblePasses.length === 0 ? (
                                             <span className='monthly-unavailable'>
                                                 No passes are available right now. Please check back soon or see the front desk.
                                             </span>
@@ -425,9 +446,9 @@ export default function Classes() {
                                             />
                                             {errors.phone && <span className='form-error'>{errors.phone}</span>}
                                         </div>
-                                        {showEmail ? (
+                                        {showEmail || cart.length === 0 ? (
                                             <div className='co-field'>
-                                                <label>Email (optional)</label>
+                                                <label>Email {cart.length === 0 ? '(for your receipt)' : '(optional)'}</label>
                                                 <input
                                                     type='email'
                                                     name='email'
@@ -435,6 +456,7 @@ export default function Classes() {
                                                     onChange={handleChange}
                                                     placeholder='Email address'
                                                 />
+                                                {errors.email && <span className='form-error'>{errors.email}</span>}
                                             </div>
                                         ) : (
                                             <button type='button' className='co-link' onClick={() => setShowEmail(true)}>
