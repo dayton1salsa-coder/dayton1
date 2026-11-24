@@ -624,19 +624,20 @@ export default function Classes() {
                         {step === 3 && (
                             <div className='checkout-confirmation co'>
                                 <div className='confirmation-icon'>✓</div>
-                                <h3>Payment Successful!</h3>
+                                {/* free = a $0 order: Choreo gave the passes, nothing was paid */}
+                                <h3>{paymentDetails?.free ? "You're all set!" : 'Payment Successful!'}</h3>
                                 <div className='co-summary co-review'>
                                     {renderLines(false, true)}
                                     <div className='co-total'>
                                         <span>Total paid</span>
-                                        <span>${orderTotal.toFixed(2)}</span>
+                                        <span>${(paymentDetails?.free ? 0 : orderTotal).toFixed(2)}</span>
                                     </div>
                                     {paymentDetails && (
-                                        <span className='co-note'>Transaction ID: {paymentDetails.id}</span>
+                                        <span className='co-note'>{paymentDetails.free ? `Order number: ${String(paymentDetails.id).slice(0, 8)}` : `Transaction ID: ${paymentDetails.id}`}</span>
                                     )}
                                 </div>
                                 <span className='confirmation-message'>
-                                    A receipt has been sent to your PayPal email.
+                                    {paymentDetails?.free ? 'No payment was needed.' : 'A receipt has been sent to your PayPal email.'}
                                     {merchCart.length > 0 ? ' Your merch will be ready for pickup at class.' : ''}
                                     {' '}Please show this confirmation when you arrive.
                                 </span>

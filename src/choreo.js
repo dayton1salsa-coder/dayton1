@@ -2,7 +2,8 @@
 // Nothing secret here; prices are public. Change the address in Netlify with
 // VITE_CHOREO_SLUG / VITE_CHOREO_URL if needed (no code change).
 export const CHOREO_URL = (import.meta.env.VITE_CHOREO_URL || 'https://choreo.icanoki.com').replace(/\/$/, '')
-export const CHOREO_SLUG = import.meta.env.VITE_CHOREO_SLUG || 'dayton1'
+// Falls back to Heather's real studio (dayton1salsa), never the old practice one.
+export const CHOREO_SLUG = import.meta.env.VITE_CHOREO_SLUG || 'dayton1salsa'
 
 // PayPal: "true" only on a test deploy that uses PayPal sandbox keys.
 export const PAYPAL_SANDBOX = import.meta.env.VITE_PAYPAL_SANDBOX === 'true'

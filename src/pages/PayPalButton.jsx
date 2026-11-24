@@ -40,6 +40,12 @@ export default function PayPalButton({ cart, merchItems = [], buyer, onSuccess }
                         })
                     })
                     const data = await res.json()
+                    // Nothing to pay ($0 order): Choreo already gave the passes. Show the
+                    // thank-you, and stop PayPal (throwing closes its window).
+                    if (res.ok && data.free) {
+                        onSuccessRef.current({ id: data.orderId, free: true })
+                        throw new Error('free-order')
+                    }
                     if (!res.ok || !data.id) {
                         if (data.waiverUrl) {
                             if (confirm(`${data.error}\n\nOpen the waiver now?`)) window.open(data.waiverUrl, '_blank', 'noopener')
@@ -67,6 +73,7 @@ export default function PayPalButton({ cart, merchItems = [], buyer, onSuccess }
                     }
                 },
                 onError: (err) => {
+                    if (String(err?.message || err).includes('free-order')) return // handled above
                     console.error('PayPal error:', err)
                 },
                 onCancel: () => {

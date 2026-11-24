@@ -5,7 +5,7 @@
 // Body: { buyer: {name, email, phone},
 //         people: [{ firstName, lastName, phone, email, passId }],
 //         merch:  [{ productId, sizeId, quantity }] }      (Choreo ids)
-// Returns { id } (the PayPal order id) or { error }.
+// Returns { id } (the PayPal order id), { free: true, orderId } when there's nothing to pay, or { error }.
 import { randomUUID } from 'node:crypto'
 import { PP_BASE, json, missingSettings, paypalToken, choreo, money } from '../lib/shared.js'
 
@@ -42,6 +42,10 @@ export const handler = async (event) => {
                 waiverUrl: r.data.waiver_url || null
             })
         }
+        // $0 order (a free pass, or a member discount that covers it all): Choreo has
+        // already given the passes. There's nothing to pay, so no PayPal order.
+        if (r.data.free || r.data.total_cents === 0) return json(200, { free: true, orderId: r.data.order_id })
+
         const lines = (r.data.lines || []).map(l => ({
             name: `${l.name}${l.holder_name ? ` - ${l.holder_name}` : ''}`.slice(0, 127),
             unit_amount: { currency_code: 'USD', value: money(l.unit_price_cents) },
