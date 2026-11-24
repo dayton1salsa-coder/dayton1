@@ -66,3 +66,50 @@ export function useChoreoProducts() {
     }))
     return { products, loading, error }
 }
+
+// Events (Heather site update 04): her own events from Choreo (tickets or free RSVP)
+// and other people's events she promotes (Choreo update 54). Upcoming only, soonest
+// first; Choreo drops them by itself once they're over.
+// Shaped for the Events page: { id, title, photo, date, time, place, own, host, priceLine,
+//   status, button: { label, url, external } | null, canceled }.
+export function useChoreoEvents() {
+    const { data, loading, error } = useChoreo()
+    const tz = data?.studio?.timezone || 'America/New_York'
+    const fmt = (iso, o) => new Intl.DateTimeFormat('en-US', { timeZone: tz, ...o }).format(new Date(iso))
+    const hm = (iso) => fmt(iso, { hour: 'numeric', minute: '2-digit' }).replace(':00', '')
+    const money = (c) => `$${dollars(c)}`
+    const events = (data?.events || []).map(e => {
+        const own = !e.promoted
+        const tickets = (e.tickets || []).filter(t => !t.sold_out)
+        const soldOut = own && e.kind === 'tickets' && (e.spots_left === 0 || !tickets.length)
+        const full = own && e.kind === 'rsvp' && e.spots_left === 0
+        // "Full night $15 · Social only $10", "$45", "Free · RSVP"
+        const priceLine = !own ? ''
+            : e.kind === 'rsvp' ? 'Free · RSVP'
+            : tickets.length === 1 ? money(tickets[0].price_cents)
+            : tickets.length > 1 && tickets.length <= 3 ? tickets.map(t => `${t.name} ${money(t.price_cents)}`).join(' · ')
+            : tickets.length ? `From ${money(Math.min(...tickets.map(t => t.price_cents)))}` : ''
+        const status = e.canceled ? 'Canceled' : soldOut ? 'Sold out' : full ? 'Full'
+            : own && e.spots_left != null && e.spots_left <= 10 ? `${e.spots_left} spot${e.spots_left === 1 ? '' : 's'} left` : ''
+        const button = e.canceled || soldOut || full ? null
+            : own ? { label: e.kind === 'rsvp' ? 'RSVP' : 'Get tickets', url: e.page, external: false }
+            : e.info_url ? { label: 'More info', url: e.info_url, external: true } : null
+        return {
+            id: e.id,
+            title: e.title,
+            photo: e.photo_small || e.photo || '',
+            date: fmt(e.starts_at, { weekday: 'long', month: 'short', day: 'numeric', year: 'numeric' }),
+            time: e.ends_at ? `${hm(e.starts_at)} – ${hm(e.ends_at)}` : hm(e.starts_at),
+            place: [e.place?.name, e.place?.address].filter(Boolean).join(', '),
+            own,
+            host: e.host_name || '',
+            priceLine,
+            status,
+            button,
+            canceled: !!e.canceled,
+        }
+    })
+    // "Next up": the soonest event that's still on.
+    const next = events.find(e => !e.canceled)
+    return { events, nextId: next?.id || null, loading, error }
+}
