@@ -11,6 +11,8 @@ import { buildSchedule } from '../schedule'
 const emptyPerson = { firstName: '', lastName: '', phone: '', email: '' }
 const emptyPickup = { name: '', phone: '', email: '' }
 
+const joinList = (list) => list.length <= 1 ? (list[0] || '') : `${list.slice(0, -1).join(', ')} & ${list[list.length - 1]}`
+
 export default function Classes() {
     // Passes now come from Choreo (only the ones on sale right now)
     const { passes: passTypes, loading: passesLoading } = useChoreoPasses()
@@ -53,6 +55,7 @@ export default function Classes() {
     const specialEvents = schedule?.specialEvents || []
     const blocks = schedule?.blocks || []
     const place = schedule?.place
+    const places = schedule?.places || []
 
     function passFor(key) {
         return passTypes.find(p => p.key === key)
@@ -284,8 +287,14 @@ export default function Classes() {
         <div className="classes-page">
             <div className='classes-content'>
                 <div className='classes-location'>
-                    <h3>Location</h3>
-                    {place ? (
+                    <h3>{places.length > 1 ? 'Locations' : 'Location'}</h3>
+                    {places.length > 1 ? places.map(pl => (
+                        <div key={pl.name} style={{ marginBottom: 12 }}>
+                            <p><strong>{joinList(pl.days)}</strong></p>
+                            <p>{pl.name}</p>
+                            {pl.address && <p>{pl.address}</p>}
+                        </div>
+                    )) : place ? (
                         <>
                             <p>{place.name}</p>
                             {place.address && (place.address.includes(',')
@@ -303,8 +312,9 @@ export default function Classes() {
                 <div className='classes-schedules'>
                     <div className='classes-schedule-section'>
                         <div className='days'>
-                            <h3>{dayName}</h3>
-                            <p>{datesList}</p>
+                            {/* One class night: "Mondays" + its dates. Several: the month here, dates per night below. */}
+                            <h3>{blocks.length > 1 ? month : dayName}</h3>
+                            {blocks.length <= 1 && <p>{datesList}</p>}
                             {cancellationNote && <p>{cancellationNote}</p>}
                             {announcement && <p className='classes-announcement'>🔔 {announcement}</p>}
                         </div>
@@ -312,7 +322,8 @@ export default function Classes() {
                             <h3>Class Schedule</h3>
                             {blocks.map(b => (
                                 <div key={b.weekday}>
-                                {blocks.length > 1 && <h4>{b.day}</h4>}
+                                {blocks.length > 1 && <h4>{b.day}{places.length > 1 && b.place ? ` · ${b.place.name}` : ''}</h4>}
+                                {blocks.length > 1 && b.dates && <p className='schedule-dates'>{b.dates}</p>}
                                 <div className='schedule'>
                                     <div className='times'>
                                         {b.rows.map((r, i) => <p key={i}>{r.time}</p>)}

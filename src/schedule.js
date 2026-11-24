@@ -47,8 +47,9 @@ export function buildSchedule(data) {
     const pretty = (d) => `${SHORT[Number(d.slice(5, 7)) - 1]} ${Number(d.slice(8))}`
     const held = dates.filter(d => !canceledDays.has(d))
     const off = dates.filter(d => canceledDays.has(d))
-    const list = held.map(pretty)
-    const datesList = list.length ? `${list[0]}${list.length > 1 ? ', ' + list.slice(1).map(x => x.split(' ')[1]).join(', ') : ''}` : ''
+    // "Nov 2", "Nov 9", "Nov 16" -> "Nov 2, 9, 16"
+    const shortList = (list) => list.length ? `${list[0]}${list.length > 1 ? ', ' + list.slice(1).map(x => x.split(' ')[1]).join(', ') : ''}` : ''
+    const datesList = shortList(held.map(pretty))
 
     const monthKey = `${y}-${String(m).padStart(2, '0')}`
     const events = (data.classes || []).filter(c => !c.weekly && localDate(c.starts_at, tz).startsWith(monthKey)).map(c => ({
@@ -61,8 +62,19 @@ export function buildSchedule(data) {
     const blocks = weekdays.map(wd => ({
         weekday: wd,
         day: DAYS[wd],
-        rows: weekly.filter(w => w.weekday === wd).map(w => ({ time: clock(w.start_time), title: w.title }))
+        rows: weekly.filter(w => w.weekday === wd).map(w => ({ time: clock(w.start_time), title: w.title })),
+        dates: shortList(held.filter(d => new Date(Date.UTC(+d.slice(0, 4), +d.slice(5, 7) - 1, +d.slice(8))).getUTCDay() === wd).map(pretty)),
+        place: weekly.find(w => w.weekday === wd && w.location)?.location || null
     }))
+
+    // Every place classes happen (e.g. Mondays at one studio, Tuesdays at another).
+    const places = []
+    for (const b of blocks) {
+        if (!b.place) continue
+        const same = places.find(p => p.name === b.place.name)
+        if (same) same.days.push(b.day)
+        else places.push({ ...b.place, days: [b.day] })
+    }
 
     const place = weekly.find(w => w.location)?.location || (data.classes || []).find(c => c.location)?.location || null
     return {
@@ -73,6 +85,7 @@ export function buildSchedule(data) {
         announcement: data.studio?.announcement || '',
         specialEvents: events,
         blocks,
-        place
+        place,
+        places
     }
 }

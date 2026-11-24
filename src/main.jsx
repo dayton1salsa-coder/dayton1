@@ -8,11 +8,13 @@ import Events from './pages/Events';
 import Instructors from './pages/Instructors';
 import FAQs from './pages/FAQs';
 import GoToChoreo from './pages/GoToChoreo';
+import NotFound from './pages/NotFound';
 import Shop from './pages/Shop'
 const router = createBrowserRouter([
   {
     path: '/',
     element: <App />,
+    errorElement: <NotFound />,
     children: [
       {
         index: true,
@@ -45,6 +47,10 @@ const router = createBrowserRouter([
       
       { path: 'Shop',
         element: <Shop /> },
+      // Invoices are managed in Choreo now (Dashboard > Invoices).
+      { path: '/invoices', element: <GoToChoreo to='owner' /> },
+      // Anything else: a friendly "Page not found" (keeps the menu).
+      { path: '*', element: <NotFound /> },
     ],
   },
   {
