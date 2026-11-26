@@ -38,7 +38,7 @@ const router = createBrowserRouter([
       },
       {
         path: '/admin',
-        element: <GoToChoreo to='owner' />,
+        element: <GoToChoreo to='desk' />, // straight to check-in, like the old admin page
       },
       {
         path: '/invoice/:invoiceId',
